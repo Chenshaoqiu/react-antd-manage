@@ -1,70 +1,70 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row, Card, Table } from "antd";
-import { getData } from "../../api";
-import "./home.css";
-import * as Icon from "@ant-design/icons";
-import MyEcharts from "../../components/ECharts";
+import React, { useEffect, useState } from 'react';
+import { Col, Row, Card, Table } from 'antd';
+import { getData } from '../../api';
+import './home.less';
+import * as Icon from '@ant-design/icons';
+import MyEcharts from '../../components/ECharts';
 
 const columns = [
   {
-    title: "课程",
-    dataIndex: "name",
+    title: '课程',
+    dataIndex: 'name',
   },
   {
-    title: "今日购买",
-    dataIndex: "todayBuy",
+    title: '今日购买',
+    dataIndex: 'todayBuy',
   },
   {
-    title: "本月购买",
-    dataIndex: "monthBuy",
+    title: '本月购买',
+    dataIndex: 'monthBuy',
   },
   {
-    title: "总购买",
-    dataIndex: "totalBuy",
+    title: '总购买',
+    dataIndex: 'totalBuy',
   },
 ];
 const countData = [
   {
-    name: "今日支付订单",
+    name: '今日支付订单',
     value: 1234,
-    icon: "CheckCircleOutlined",
-    color: "#2ec7c9",
+    icon: 'CheckCircleOutlined',
+    color: '#2ec7c9',
   },
   {
-    name: "今日收藏订单",
+    name: '今日收藏订单',
     value: 3421,
-    icon: "ClockCircleOutlined",
-    color: "#ffb980",
+    icon: 'ClockCircleOutlined',
+    color: '#ffb980',
   },
   {
-    name: "今日未支付订单",
+    name: '今日未支付订单',
     value: 1234,
-    icon: "CloseCircleOutlined",
-    color: "#5ab1ef",
+    icon: 'CloseCircleOutlined',
+    color: '#5ab1ef',
   },
   {
-    name: "本月支付订单",
+    name: '本月支付订单',
     value: 1234,
-    icon: "CheckCircleOutlined",
-    color: "#2ec7c9",
+    icon: 'CheckCircleOutlined',
+    color: '#2ec7c9',
   },
   {
-    name: "本月收藏订单",
+    name: '本月收藏订单',
     value: 3421,
-    icon: "ClockCircleOutlined",
-    color: "#ffb980",
+    icon: 'ClockCircleOutlined',
+    color: '#ffb980',
   },
   {
-    name: "本月未支付订单",
+    name: '本月未支付订单',
     value: 1234,
-    icon: "CloseCircleOutlined",
-    color: "#5ab1ef",
+    icon: 'CloseCircleOutlined',
+    color: '#5ab1ef',
   },
 ];
 const iconToElement = (name) => React.createElement(Icon[name]);
 
 const Home = () => {
-  const userImg = require("../../assets/images/user.png");
+  const userImg = require('../../assets/images/user.png');
   const [tableData, setTableData] = useState([]);
   const [echartData, setEchartData] = useState({});
   useEffect(() => {
@@ -79,7 +79,7 @@ const Home = () => {
         series.push({
           name: key,
           data: order.data.map((item) => item[key]),
-          type: "line",
+          type: 'line',
         });
       });
       setEchartData({
@@ -92,14 +92,14 @@ const Home = () => {
           xData: userData.map((item) => item.date),
           series: [
             {
-              name: "新增用户",
+              name: '新增用户',
               data: userData.map((item) => item.new),
-              type: "bar",
+              type: 'bar',
             },
             {
-              name: "活跃用户",
+              name: '活跃用户',
               data: userData.map((item) => item.active),
-              type: "bar",
+              type: 'bar',
             },
           ],
         },
@@ -107,7 +107,7 @@ const Home = () => {
           series: [
             {
               data: videoData,
-              type: "pie",
+              type: 'pie',
             },
           ],
         },
@@ -134,16 +134,16 @@ const Home = () => {
             </p>
           </div>
         </Card>
-        <Card style={{ marginTop: "20px" }} hoverable>
+        <Card style={{ marginTop: '20px' }} hoverable>
           <Table
-            rowKey={"name"}
+            rowKey={'name'}
             columns={columns}
             dataSource={tableData}
             pagination={false}
           />
         </Card>
       </Col>
-      <Col style={{ marginTop: "20px" }} span={16}>
+      <Col style={{ marginTop: '20px' }} span={16}>
         <div className="num">
           {countData.map((item, index) => {
             return (
@@ -160,20 +160,20 @@ const Home = () => {
           })}
         </div>
         {echartData.order && (
-          <MyEcharts chartData={echartData.order} style={{ height: "280px" }} />
+          <MyEcharts chartData={echartData.order} style={{ height: '280px' }} />
         )}
         <div className="graph">
           {echartData.user && (
             <MyEcharts
               chartData={echartData.user}
-              style={{ width: "50%", height: "240px" }}
+              style={{ width: '50%', height: '240px' }}
             />
           )}
           {echartData.video && (
             <MyEcharts
               chartData={echartData.video}
               isAxisChart={false}
-              style={{ width: "50%", height: "260px" }}
+              style={{ width: '50%', height: '260px' }}
             />
           )}
         </div>

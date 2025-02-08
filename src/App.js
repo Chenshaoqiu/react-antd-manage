@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+import './App.less';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
 
