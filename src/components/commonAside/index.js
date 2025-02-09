@@ -24,6 +24,15 @@ const items = MenuConfig.map((icon) => {
   }
   return child;
 });
+const siderStyle = {
+  position: 'sticky',
+  top: 64,
+  bottom: 0,
+  height: 'calc(100vh - 64px)' /* 使侧边栏高度充满视口减去 Header 的高度 */,
+  overflow: 'auto',
+  scrollbarWidth: 'thin',
+  scrollbarGutter: 'stable',
+};
 const CommonAside = ({ collapsed }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,9 +64,10 @@ const CommonAside = ({ collapsed }) => {
     // 页面跳转
     navigate(e.key);
   };
+
   return (
-    <Sider width={200} collapsed={collapsed}>
-      <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
+    <Sider width={200} collapsed={collapsed} style={siderStyle}>
+      {/* <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3> */}
       <Menu
         mode="inline"
         theme="dark"

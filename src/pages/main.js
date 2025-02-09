@@ -18,7 +18,7 @@ const Main = () => {
   return (
     <RouterAuth>
       <Layout className="main-container">
-        <CommonAside collapsed={collapsed} />
+        {/* <CommonAside collapsed={collapsed} />
         <Layout>
           <CommonHeader collapsed={collapsed} />
           <CommonTag />
@@ -33,6 +33,24 @@ const Main = () => {
           >
             <Outlet />
           </Content>
+        </Layout> */}
+        <CommonHeader collapsed={collapsed} />
+        <Layout>
+          <CommonAside collapsed={collapsed} />
+          <Layout>
+            <CommonTag />
+            <Content
+              style={{
+                margin: '0 16px 16px 16px',
+                padding: 24,
+                minHeight: 280,
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG,
+              }}
+            >
+              <Outlet />
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
     </RouterAuth>
