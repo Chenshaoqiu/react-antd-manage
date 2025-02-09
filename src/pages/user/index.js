@@ -16,7 +16,7 @@ import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 
 const User = () => {
-  const [listData, setListData] = useState({
+  const [searchParameters, setSearchParameters] = useState({
     name: '',
   });
   const [tableData, setTableData] = useState([]);
@@ -28,13 +28,17 @@ const User = () => {
   // 搜索事件
   const handleSearch = (val) => {
     console.log(val, 'val');
-    setListData({
+    setSearchParameters({
       name: val.keyword,
     });
   };
+  const onReset = () => {
+    searchForm.resetFields();
+    setSearchParameters({ name: '' });
+  };
   useEffect(() => {
     getTableData();
-  }, [listData]);
+  }, [searchParameters]);
   // 创建弹窗form实例
   const [form] = useForm();
   const handleClick = (type, rowData) => {
@@ -86,7 +90,7 @@ const User = () => {
   };
   // 请求列表
   const getTableData = () => {
-    getUser(listData).then(({ data }) => {
+    getUser(searchParameters).then(({ data }) => {
       setTableData(data.list);
     });
   };
@@ -146,21 +150,35 @@ const User = () => {
   }, []);
   return (
     <div className="user">
-      <div className="flex-box space-between">
-        <Button type="primary" onClick={() => handleClick('add')}>
-          +新增
-        </Button>
-        <Form form={searchForm} layout="inline" onFinish={handleSearch}>
-          <Form.Item name="keyword">
-            <Input placeholder="请输入用户名" />
-          </Form.Item>
-          <Form.Item>
-            <Button htmlType="submit" type="primary">
-              搜索
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+      <Form form={searchForm} layout="inline" onFinish={handleSearch}>
+        <Form.Item label="用户名：" name="keyword" style={{ marginBottom: 10 }}>
+          <Input placeholder="请输入用户名" />
+        </Form.Item>
+        <Form.Item label="年龄：" name="age" style={{ marginBottom: 10 }}>
+          <Input placeholder="请输入年龄" />
+        </Form.Item>
+        <Form.Item style={{ marginBottom: 16 }}>
+          <Button htmlType="submit" type="primary" style={{ marginRight: 16 }}>
+            搜索
+          </Button>
+          <Button
+            htmlType="button"
+            onClick={onReset}
+            style={{ marginRight: 16 }}
+          >
+            重置
+          </Button>
+        </Form.Item>
+      </Form>
+
+      <Button
+        type="primary"
+        onClick={() => handleClick('add')}
+        style={{ margin: '0 16px 16px 0' }}
+      >
+        新增
+      </Button>
+
       <Table columns={columns} dataSource={tableData} rowKey={'id'} />
       <Modal
         open={isModalOpen}
