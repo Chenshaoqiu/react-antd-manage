@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import './login.less';
-import { getMenu } from '../../api';
+import { getMenu } from '../../services';
 import { useNavigate, Navigate } from 'react-router-dom';
 
 const Login = () => {

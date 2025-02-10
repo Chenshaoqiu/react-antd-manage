@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Table } from 'antd';
-import { getData } from '../../api';
+import { getData } from '../../services';
 import './home.less';
 import * as Icon from '@ant-design/icons';
 import MyEcharts from '../../components/ECharts';

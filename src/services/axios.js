@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// const baseUrl = process.env.NODE_ENV === 'development'
+//   ? process.env.REACT_APP_DEV_API_URL
+//   : process.env.REACT_APP_PROD_API_URL;
 const baseUrl = '/api';
 
 class HttpRequest {
@@ -7,6 +10,7 @@ class HttpRequest {
     this.baseUrl = baseUrl;
   }
 
+  // 配置请求
   getInsideConfig() {
     console.log(process.env.NODE_ENV);
     const config = {
@@ -19,6 +23,7 @@ class HttpRequest {
     };
     return config;
   }
+
   interceptors(instance) {
     // 添加请求拦截器
     instance.interceptors.request.use(
@@ -31,7 +36,6 @@ class HttpRequest {
         return config;
       },
       (error) => {
-        // 请求错误处理
         return Promise.reject(error);
       }
     );
@@ -48,8 +52,12 @@ class HttpRequest {
           // 根据错误的状态码处理不同的错误
           switch (error.response.status) {
             case 401:
-              // 401 未授权，可以跳转到登录页
+              // 401 未授权
               console.error('Unauthorized');
+              break;
+            case 404:
+              // 404 找不到页面
+              console.error('Resource not found.');
               break;
             case 500:
               // 500 服务器错误
@@ -69,11 +77,64 @@ class HttpRequest {
       }
     );
   }
-  request(options) {
+
+  // request(options) {
+  //   const instance = axios.create();
+  //   options = { ...this.getInsideConfig(), ...options };
+  //   this.interceptors(instance);
+  //   return instance(options);
+  // }
+
+  // 封装请求方法
+  async request(options) {
     const instance = axios.create();
     options = { ...this.getInsideConfig(), ...options };
     this.interceptors(instance);
-    return instance(options);
+    try {
+      const response = await instance(options);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 封装 GET 请求
+  async get(url, params) {
+    return this.request({
+      method: 'get',
+      url,
+      params,
+    });
+  }
+
+  // 封装 POST 请求
+  async post(url, data) {
+    return this.request({
+      method: 'post',
+      url,
+      data,
+    });
+  }
+
+  // 封装 PUT 请求
+  async put(url, data) {
+    return this.request({
+      method: 'put',
+      url,
+      data,
+    });
+  }
+
+  // 封装 DELETE 请求
+  async delete(url, params) {
+    return this.request({
+      method: 'delete',
+      url,
+      params,
+    });
   }
 }
-export default new HttpRequest(baseUrl);
+
+const http = new HttpRequest(baseUrl);
+
+export default http;

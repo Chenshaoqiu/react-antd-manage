@@ -11,7 +11,7 @@ import {
   Popconfirm,
 } from 'antd';
 import './user.less';
-import { getUser, addUser, editUser, deleteUser } from '../../api';
+import { getUser, addUser, editUser, deleteUser } from '../../services';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 
