@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row, Card, Table } from 'antd';
-import { getData } from '../../services';
+import homeApi from '../../services/api/home';
 import './home.less';
 import * as Icon from '@ant-design/icons';
 import MyEcharts from '../../components/ECharts';
 
+const { getData } = homeApi;
 const columns = [
   {
     title: '课程',

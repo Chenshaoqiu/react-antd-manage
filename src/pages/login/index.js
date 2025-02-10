@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, Input, Button, message } from 'antd';
 import './login.less';
-import { getMenu } from '../../services';
+import loginApi from '../../services/api/login';
 import { useNavigate, Navigate } from 'react-router-dom';
 
+const { getMenu } = loginApi;
 const Login = () => {
   const navigate = useNavigate();
   if (localStorage.getItem('token')) {

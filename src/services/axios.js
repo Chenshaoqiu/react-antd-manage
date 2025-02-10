@@ -78,13 +78,6 @@ class HttpRequest {
     );
   }
 
-  // request(options) {
-  //   const instance = axios.create();
-  //   options = { ...this.getInsideConfig(), ...options };
-  //   this.interceptors(instance);
-  //   return instance(options);
-  // }
-
   // 封装请求方法
   async request(options) {
     const instance = axios.create();

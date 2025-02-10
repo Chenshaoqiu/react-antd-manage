@@ -11,10 +11,11 @@ import {
   Popconfirm,
 } from 'antd';
 import './user.less';
-import { getUser, addUser, editUser, deleteUser } from '../../services';
+import userApi from '../../services/api/user';
 import { useForm } from 'antd/es/form/Form';
 import dayjs from 'dayjs';
 
+const { getUsers, addUser, editUser, deleteUser } = userApi;
 const User = () => {
   const [searchParameters, setSearchParameters] = useState({
     name: '',
@@ -62,35 +63,28 @@ const User = () => {
     form.resetFields();
   };
   // 成功提交的事件
-  const handleOk = () => {
-    form
-      .validateFields()
-      .then((val) => {
-        // 日期参数
-        val.birth = dayjs(val.birth).format('YYYY-MM-DD');
-        if (modalType) {
-          // 编辑
-          editUser(val).then(() => {
-            // 关闭弹窗
-            handleCancel();
-            getTableData();
-          });
-        } else {
-          // 新增
-          addUser(val).then(() => {
-            // 关闭弹窗
-            handleCancel();
-            getTableData();
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleOk = async () => {
+    try {
+      const val = await form.validateFields();
+      // 日期参数
+      val.birth = dayjs(val.birth).format('YYYY-MM-DD');
+      if (modalType) {
+        // 编辑
+        await editUser(val);
+      } else {
+        // 新增
+        await addUser(val);
+      }
+      handleCancel();
+      getTableData();
+    } catch (err) {
+      console.log(err); // 捕获表单验证或请求错误
+    }
   };
+
   // 请求列表
   const getTableData = () => {
-    getUser(searchParameters).then(({ data }) => {
+    getUsers(searchParameters).then(({ data }) => {
       setTableData(data.list);
     });
   };
