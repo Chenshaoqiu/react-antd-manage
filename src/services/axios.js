@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-// const baseUrl = process.env.NODE_ENV === 'development'
-//   ? process.env.REACT_APP_DEV_API_URL
-//   : process.env.REACT_APP_PROD_API_URL;
-const baseUrl = '/api';
-
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_API_URL
+    : process.env.REACT_APP_API_URL;
+// const baseUrl = '/api';
+console.log('baseUrl', baseUrl, process.env.REACT_APP_API_URL);
 class HttpRequest {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -12,7 +13,7 @@ class HttpRequest {
 
   // 配置请求
   getInsideConfig() {
-    console.log(process.env.NODE_ENV);
+    console.log('this.baseUrl', this.baseUrl);
     const config = {
       baseUrl: this.baseUrl,
       timeout: 10000, // 设置请求超时时间

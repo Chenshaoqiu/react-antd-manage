@@ -17,9 +17,20 @@ const Login = () => {
         content: '请输入用户名和密码',
       });
     }
-    getMenu(val).then(({ data }) => {
-      localStorage.setItem('token', data.data.token);
+    getMenu(val).then(({ data: res }) => {
+      const { code, data, msg } = res;
+      if (code !== 0) {
+        return message.open({
+          type: 'error',
+          content: msg,
+        });
+      }
+      localStorage.setItem('token', data.token);
       navigate('/home');
+      message.open({
+        type: 'success',
+        content: msg,
+      });
     });
   };
   return (
